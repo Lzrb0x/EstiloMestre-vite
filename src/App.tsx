@@ -1,17 +1,26 @@
-import { Routes, Route, Link } from "react-router-dom";
-import About from "./pages/About.tsx";
+import { Route, Routes } from "react-router-dom";
+import { Suspense, lazy } from "react";
+
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const About = lazy(() => import("./pages/About"));
+const BarbershopPage = lazy(() => import("./pages/BarbershopPage"));
 
 export default function App() {
   return (
-    <div>
-      <nav className="p-4 bg-gray-200 flex gap-4">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-      </nav>
-
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center h-[90vh] text-9xl font-medium text-primary">
+          <span className="animate-bounce [animation-delay:-0.3s]">.</span>
+          <span className="animate-bounce [animation-delay:-0.15s]">.</span>
+          <span className="animate-bounce">.</span>
+        </div>
+      }
+    >
       <Routes>
+        <Route path="/" element={<Dashboard />} />
         <Route path="/about" element={<About />} />
+        <Route path="/barbershop" element={<BarbershopPage />} />
       </Routes>
-    </div>
+    </Suspense>
   );
 }
