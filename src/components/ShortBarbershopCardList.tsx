@@ -2,8 +2,10 @@ import { MapPin, Clock, Calendar, ChevronRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
+import { LoadingIcon } from "./LoadingIcon";
 
 type Barber = {
+  id: bigint;
   name: string;
   address: string;
   distance?: string;
@@ -34,11 +36,7 @@ const ShortBarbershopCardList = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center text-4xl font-medium text-primary">
-        <span className="animate-bounce [animation-delay:-0.3s]">.</span>
-        <span className="animate-bounce [animation-delay:-0.15s]">.</span>
-        <span className="animate-bounce">.</span>
-      </div>
+      <LoadingIcon />
     );
   }
 
@@ -83,7 +81,7 @@ const ShortBarbershopCardList = () => {
               </div>
             </div>
           </div>
-          <Link to="/barbershop">
+          <Link to={`/barbershop/${barber.id}`}>
             <Button className="w-full p-5">
               <Calendar size={18} />
               <span>Ver Horários</span>

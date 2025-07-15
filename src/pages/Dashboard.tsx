@@ -41,9 +41,7 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <div className="">
             <ShortBarbershopCardList />
-          </div>
 
           <div className="text-center mt-8">
             <Button variant={"link"} className="font-medium text-lg font-mono">
