@@ -3,7 +3,7 @@ import { Suspense, lazy } from "react";
 import { LoadingIcon } from "./components/LoadingIcon";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
-const BarbershopPage = lazy(() => import("./pages/BarbershopPage"));
+const BarbershopDetails = lazy(() => import("./pages/Barbershop/BarbershopDetails"));
 
 export default function App() {
   return (
@@ -16,7 +16,7 @@ export default function App() {
     >
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/barbershop/:id" element={<BarbershopPage />} />
+        <Route path="/barbershop/:id/barbershopDetails" element={<BarbershopDetails />} />
       </Routes>
     </Suspense>
   );

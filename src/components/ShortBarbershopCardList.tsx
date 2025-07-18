@@ -81,7 +81,7 @@ const ShortBarbershopCardList = () => {
               </div>
             </div>
           </div>
-          <Link to={`/barbershop/${barber.id}`}>
+          <Link to={`/barbershop/${barber.id}/barbershopDetails`}>
             <Button className="w-full p-5">
               <Calendar size={18} />
               <span>Ver Horários</span>
