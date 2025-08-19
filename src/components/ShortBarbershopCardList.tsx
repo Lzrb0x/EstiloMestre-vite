@@ -59,16 +59,16 @@ const ShortBarbershopCardList = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-      {data.barbershops.map((barber, index) => (
+      {data.barbershops.map((barbershop, index) => (
         <div
-          key={barber.name}
+          key={barbershop.name}
           className="animate-fade-in-slide-up bg-slate-50 hover:bg-white border border-slate-200 rounded-xl p-6 transition-all duration-300 hover:shadow-lg group"
           style={{ animationDelay: `${index * 600}ms` }}
         >
           <div className="flex justify-between items-start mb-4">
             <div>
-              <h3 className="text-lg font-semibold text-secondary mb-1">{barber.name}</h3>
-              <p className="text-popover text-sm">{barber.address}</p>
+              <h3 className="text-lg font-semibold text-secondary mb-1">{barbershop.name}</h3>
+              <p className="text-popover text-sm">{barbershop.address}</p>
             </div>
             <div className="text-right">
               <div className="flex items-center gap-1 text-secondary text-sm mb-1">
@@ -81,7 +81,7 @@ const ShortBarbershopCardList = () => {
               </div>
             </div>
           </div>
-          <Link to={`/barbershop/${barber.id}/barbershopDetails`}>
+          <Link to={`/barbershop/${barbershop.id}/barbershopDetails`}>
             <Button className="w-full p-5">
               <Calendar size={18} />
               <span>Ver Horários</span>

@@ -4,6 +4,7 @@ import { LoadingIcon } from "./components/LoadingIcon";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const BarbershopDetails = lazy(() => import("./pages/Barbershop/BarbershopDetails"));
+const BookingFlow = lazy(() => import("./pages/Barbershop/bookingSteps/BookingFlow"));
 
 export default function App() {
   return (
@@ -16,7 +17,8 @@ export default function App() {
     >
       <Routes>
         <Route path="/" element={<Dashboard />} />
-        <Route path="/barbershop/:id/barbershopDetails" element={<BarbershopDetails />} />
+        <Route path="/barbershop/:barbershopId/barbershopDetails" element={<BarbershopDetails />} />
+        <Route path="/barbershop/:barbershopId/booking" element={<BookingFlow />} />
       </Routes>
     </Suspense>
   );

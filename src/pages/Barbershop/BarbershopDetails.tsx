@@ -1,6 +1,11 @@
 import { Header } from "@/components/Header"
+import { Button } from "@/components/ui/button";
+import { Link, useParams } from "react-router-dom";
 
 export default function BarbershopDetails() {
+
+  const { barbershopId } = useParams<{ barbershopId: string }>();
+
   return (
     <div className="min-h-screen cta-section">
       <Header />
@@ -88,15 +93,11 @@ export default function BarbershopDetails() {
         </div>
 
         <div className="text-center">
-          <div className="bg-gradient-to-r from-primary to-blue-600 rounded-3xl p-8 max-w-2xl mx-auto mb-8">
-            <button className="btn-primary text-white px-12 py-4 rounded-2xl text-xl font-bold flex items-center justify-center mx-auto group">
-              <span className="text-2xl mr-3">📅</span>
+          <Link to={`/barbershop/${barbershopId}/booking`}>
+            <Button className="text-xl font-bold w-1/2 py-10">
               QUERO AGENDAR AGORA!
-              <div className="ml-3 w-6 h-6 bg-accent rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">!</span>
-              </div>
-            </button>
-          </div>
+            </Button>
+          </Link>
         </div>
       </section>
     </div>
