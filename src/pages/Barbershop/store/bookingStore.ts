@@ -5,7 +5,7 @@ interface BookingData {
   barbershopServiceId: string | null;
   employeeId: string | null;
   date: string | null;
-  startTime: string | null;
+  time: string | null;
 }
 
 interface BookingState {
@@ -24,7 +24,7 @@ const initialState = {
     barbershopServiceId: null,
     employeeId: null,
     date: null,
-    startTime: null,
+    time: null,
   },
 };
 
@@ -39,3 +39,4 @@ export const useBookingStore = create<BookingState>((set) => ({
     })),
   reset: () => set(initialState),
 }));
+

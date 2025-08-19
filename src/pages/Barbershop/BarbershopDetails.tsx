@@ -27,6 +27,14 @@ export default function BarbershopDetails() {
         </div>
       </div>
 
+      <div className="text-center mt-10">
+          <Link to={`/barbershop/${barbershopId}/booking`}>
+            <Button className="font-bold w-1/2 py-10 xs:text-xs md:text-md xl:text-xl">
+              QUERO AGENDAR AGORA!
+            </Button>
+          </Link>
+        </div>
+
       {/* detalhes da barbearia */}
       <section className="container mx-auto px-4 py-16 animate-[slideUp_0.8s_ease-out_0.6s_forwards] opacity-0">
         <div className="grid md:grid-cols-2 gap-8 mb-16">
@@ -94,7 +102,7 @@ export default function BarbershopDetails() {
 
         <div className="text-center">
           <Link to={`/barbershop/${barbershopId}/booking`}>
-            <Button className="text-xl font-bold w-1/2 py-10">
+            <Button className="font-bold w-1/2 py-10 xs:text-xs md:text-md xl:text-xl">
               QUERO AGENDAR AGORA!
             </Button>
           </Link>
