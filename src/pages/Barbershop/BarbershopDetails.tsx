@@ -1,10 +1,17 @@
 import { Header } from "@/components/Header"
 import { Button } from "@/components/ui/button";
 import { Link, useParams } from "react-router-dom";
+import { useBookingStore } from "./store/bookingStore";
+import { useEffect } from "react";
 
 export default function BarbershopDetails() {
 
   const { barbershopId } = useParams<{ barbershopId: string }>();
+  const { updateBookingData } = useBookingStore();
+  useEffect(() => {
+    updateBookingData({ barbershopId });
+  }, [barbershopId, updateBookingData]);
+  
 
   return (
     <div className="min-h-screen cta-section">
