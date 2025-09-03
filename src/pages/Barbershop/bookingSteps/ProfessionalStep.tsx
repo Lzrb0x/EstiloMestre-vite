@@ -1,38 +1,58 @@
+import { EmployeeList, type Employee } from "@/components/EmployeeList";
 import { useBookingStore } from "../store/bookingStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Star, ArrowLeft } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { User, ArrowLeft } from "lucide-react";
 
-const PROFESSIONALS = [
-  { 
-    id: "emp1", 
-    name: "João Silva", 
-    specialty: "Especialista em cortes modernos",
-    rating: 4.9,
-    reviews: 127
-  },
-  { 
-    id: "emp2", 
-    name: "Carlos Santos", 
-    specialty: "Expert em barbas",
-    rating: 4.8,
-    reviews: 89
-  },
-  { 
-    id: "emp3", 
-    name: "Pedro Oliveira", 
-    specialty: "Cortes clássicos e estilosos",
-    rating: 4.7,
-    reviews: 156
-  },
-];
+interface ApiEmployee {
+  userId: number;
+  barberShopId: number;
+}
+
 
 export default function ProfessionalStep() {
   const { nextStep, prevStep, updateBookingData, bookingData } = useBookingStore();
 
+  const barbershopId = bookingData.barbershopId;
+
+  const {
+    data: employees,
+    isLoading,
+    isError,
+    error
+  } = useQuery<Employee[], Error>({
+    queryKey: ["employees", barbershopId, bookingData.barbershopServiceId],
+    queryFn: async ({ signal }) => {
+      const serviceId = bookingData.barbershopServiceId;
+      if (!serviceId) {
+        throw new Error("ID do serviço não disponível");
+      }
+
+      const response = await fetch(
+        `http://localhost:5008/barbershop/${barbershopId}/employee-by-service?barbershopServiceId=${serviceId}`,
+        { signal }
+      );
+
+      if (!response.ok) {
+        throw new Error("Falha ao buscar os profissionais");
+      }
+      const data: { employees: ApiEmployee[] } = await response.json();
+      return data.employees.map((employee) => ({
+        id: String(employee.userId),
+        barbershopId: String(employee.barberShopId)
+      }));
+    },
+    enabled: !!barbershopId && !!bookingData.barbershopServiceId,
+  });
+
   const handleSelectProfessional = (employeeId: string) => {
     updateBookingData({ employeeId });
     nextStep();
+  };
+
+  const handleCancel = () => {
+    prevStep();
   };
 
   return (
@@ -43,45 +63,17 @@ export default function ProfessionalStep() {
           Escolha um Profissional
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="space-y-3">
-          {PROFESSIONALS.map((professional) => (
-            <Button
-              key={professional.id}
-              onClick={() => handleSelectProfessional(professional.id)}
-              variant={
-                bookingData.employeeId === professional.id 
-                  ? "default" 
-                  : "outline"
-              }
-              className="w-full h-auto p-4 text-left justify-start"
-            >
-              <div className="flex-1 space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-base">
-                    {professional.name}
-                  </span>
-                  <div className="flex items-center gap-1 text-sm">
-                    <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span className="font-medium">{professional.rating}</span>
-                    <span className="text-muted-foreground">
-                      ({professional.reviews})
-                    </span>
-                  </div>
-                </div>
-                <p className="text-sm text-muted-foreground text-left">
-                  {professional.specialty}
-                </p>
-              </div>
-            </Button>
-          ))}
-        </div>
-
-        <Button 
-          onClick={prevStep} 
-          className="w-full mt-6"
-        >
-          <ArrowLeft className="w-4 h-4" />
+      <CardContent>
+        <EmployeeList
+          employees={employees}
+          isLoading={isLoading}
+          isError={isError}
+          error={error}
+          selectedEmployeeId={bookingData.employeeId || undefined}
+          onSelectEmployee={handleSelectProfessional}
+        />
+        <Button onClick={handleCancel} className="w-full mt-6">
+          <ArrowLeft className="w-4 h-4 mr-2" />
           Voltar
         </Button>
       </CardContent>
