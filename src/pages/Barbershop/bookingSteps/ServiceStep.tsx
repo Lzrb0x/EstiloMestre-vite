@@ -6,16 +6,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Scissors, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { ServiceList, type BarbershopService } from "../../../components/ServiceList"; // Importe o novo componente
+import { BarbershopServiceList, type BarbershopService } from "../../../components/BarbershopServiceList"; 
 
-// Se este tipo for usado em outros lugares, considere movê-lo para um arquivo de tipos dedicado
 interface ApiBarbershopService {
     barbershopServiceId: number;
     price: number;
     duration: string;
     descriptionOverride: string;
     serviceId: number;
-    name?: string;
 }
 
 export default function ServiceStep() {
@@ -38,7 +36,6 @@ export default function ServiceStep() {
             const data: { barbershopServices: ApiBarbershopService[] } = await response.json();
             return data.barbershopServices.map(service => ({
                 id: String(service.barbershopServiceId),
-                name: service.name || `Serviço #${service.serviceId}`,
                 price: String(service.price),
                 description: service.descriptionOverride,
                 duration: service.duration,
@@ -49,6 +46,7 @@ export default function ServiceStep() {
 
     const handleSelectService = (serviceId: string) => {
         updateBookingData({ barbershopServiceId: serviceId });
+        console.log('Serviço selecionado:', serviceId);
         nextStep();
     };
 
@@ -68,7 +66,7 @@ export default function ServiceStep() {
                 </CardTitle>
             </CardHeader>
             <CardContent>
-                <ServiceList
+                <BarbershopServiceList
                     isLoading={isLoading}
                     isError={isError}
                     error={error}

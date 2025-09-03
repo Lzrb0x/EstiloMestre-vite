@@ -1,12 +1,8 @@
-// src/components/booking/ServiceList.tsx
-
 import { Loader2, DollarSign } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-// Definindo um tipo para o serviço para ser reutilizado
 export interface BarbershopService {
     id: string;
-    name: string;
     price: string;
     description: string;
     duration: string;
@@ -21,7 +17,7 @@ interface ServiceListProps {
     onSelectService: (serviceId: string) => void;
 }
 
-export function ServiceList({
+export function BarbershopServiceList({
     services,
     isLoading,
     isError,
@@ -63,13 +59,13 @@ export function ServiceList({
                             <span className="font-semibold text-base">
                                 {service.description}
                             </span>
-                            <div className="flex items-end text-primary font-bold">
+                            <div className="flex items-end font-bold">
                                 <DollarSign className="h-4 w-4" />
                                 {service.price}
                             </div>
                         </div>
-                        <div className="flex items-center justify-between text-sm text-primary">
-                            <span>{service.duration}</span>
+                        <div className="flex items-center justify-between text-sm">
+                            <span>{service.duration} min</span>
                         </div>
                     </div>
                 </Button>
