@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 
 export interface Employee {
     id: string;
+    name: string;
     barbershopId: string;
 }
 
@@ -64,11 +65,8 @@ export function EmployeeList({
                     <div className="flex-1 space-y-1">
                         <div className="flex items-center justify-between">
                             <span className="font-semibold text-base">
-                                id do employee {employee.id}
+                                {employee.name}
                             </span>
-                            <div className="flex items-end font-bold">
-                                id da barbearia {employee.barbershopId}
-                            </div>
                         </div>
                     </div>
                 </Button>

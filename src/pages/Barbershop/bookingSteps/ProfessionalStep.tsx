@@ -7,6 +7,7 @@ import { User, ArrowLeft } from "lucide-react";
 
 interface ApiEmployee {
   userId: number;
+  name: string;
   barberShopId: number;
 }
 
@@ -40,6 +41,7 @@ export default function ProfessionalStep() {
       const data: { employees: ApiEmployee[] } = await response.json();
       return data.employees.map((employee) => ({
         id: String(employee.userId),
+        name: employee.name,
         barbershopId: String(employee.barberShopId)
       }));
     },
