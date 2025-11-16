@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Scissors, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { BarbershopServiceList, type BarbershopService } from "../../../components/BarbershopServiceList"; 
+import { BarbershopServiceList, type BarbershopService } from "../../../components/BarbershopServiceList";
 
 interface ApiBarbershopService {
     barbershopServiceId: number;
@@ -44,10 +44,11 @@ export default function ServiceStep() {
         enabled: !!barbershopId,
     });
 
-    const handleSelectService = (serviceId: string, serviceDescription: string) => {
-        updateBookingData({ 
-            barbershopServiceId: serviceId, 
-            barbershopServiceDescription: serviceDescription // Adicionando a descrição do serviço ao estado
+    const handleSelectService = (serviceId: string, serviceDescription: string, servicePrice: number) => {
+        updateBookingData({
+            barbershopServiceId: serviceId,
+            barbershopServiceDescription: serviceDescription,
+            barbershopServicePrice: servicePrice,
         });
         nextStep();
     };
@@ -74,9 +75,8 @@ export default function ServiceStep() {
                     error={error}
                     services={services}
                     selectedServiceId={bookingData.barbershopServiceId || undefined}
-                    onSelectService={(serviceId) => {
-                        const selectedService = services?.find(service => service.id === serviceId);
-                        handleSelectService(serviceId, selectedService?.description || '');
+                    onSelectService={(service) => {
+                        handleSelectService(service.id, service.description, parseFloat(service.price));
                     }}
                 />
                 <Button onClick={handleCancel} className="w-full mt-6">

@@ -14,7 +14,7 @@ interface ServiceListProps {
     isError: boolean;
     error: Error | null;
     selectedServiceId?: string;
-    onSelectService: (serviceId: string) => void;
+    onSelectService: (service: BarbershopService) => void; 
 }
 
 export function BarbershopServiceList({
@@ -50,7 +50,7 @@ export function BarbershopServiceList({
             {services.map((service) => (
                 <Button
                     key={service.id}
-                    onClick={() => onSelectService(service.id)}
+                    onClick={() => onSelectService(service)} // Passando o objeto completo
                     variant={selectedServiceId === service.id ? "default" : "outline"}
                     className="w-full h-auto p-4 text-left justify-start"
                 >

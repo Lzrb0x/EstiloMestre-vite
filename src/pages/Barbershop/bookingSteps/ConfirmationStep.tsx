@@ -34,7 +34,11 @@ export default function ConfirmationStep() {
 
   // Buscar dados para exibição
   const selectedServiceDescription = bookingData.barbershopServiceDescription;
+  const selectedServicePrice = bookingData.barbershopServicePrice;
   const selectedProfessionalName = bookingData.employeeName;
+  const selectedBarbershopName = bookingData.barbershopName;
+  const selectedBarbershopAddress = bookingData.barbershopAddress;
+
 
   const formattedDate = bookingData.date
     ? format(new Date(`${bookingData.date}T00:00:00`), "EEEE, dd 'de' MMMM 'de' yyyy", { 
@@ -51,70 +55,63 @@ export default function ConfirmationStep() {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Resumo do Agendamento */}
         <div className="bg-muted/30 rounded-lg p-4 space-y-4">
           <h3 className="font-semibold text-sm text-primary uppercase tracking-wide">
             Resumo do Agendamento
           </h3>
           
-          {/* Serviço */}
           <div className="flex items-center justify-between py-2">
             <div className="flex items-center gap-3">
               <Scissors className="w-5 h-5 text-primary" />
               <div>
-                <p className="font-medium">{selectedServiceDescription || 'N/A'}</p>
                 <p className="text-sm text-primary">Serviço</p>
+                <p className="font-medium">{selectedServiceDescription || 'N/A'}</p>
               </div>
             </div>
             <div className="flex items-center gap-1 font-semibold text-primary">
               <DollarSign className="w-4 h-4" />
-              {selectedServiceDescription || 'N/A'}
+              {selectedServicePrice !== null ? selectedServicePrice.toFixed(2) : 'N/A'}
             </div>
           </div>
           
           <Separator />
           
-          {/* Profissional */}
           <div className="flex items-center gap-3 py-2">
             <User className="w-5 h-5 text-primary" />
             <div>
-              <p className="font-medium">{selectedProfessionalName || 'N/A'}</p>
               <p className="text-sm text-primary">Profissional</p>
+              <p className="font-medium">{selectedProfessionalName || 'N/A'}</p>
             </div>
           </div>
           
           <Separator />
           
-          {/* Data */}
           <div className="flex items-center gap-3 py-2">
             <Calendar className="w-5 h-5 text-primary" />
             <div>
-              <p className="font-medium capitalize">{formattedDate}</p>
               <p className="text-sm text-primary">Data</p>
+              <p className="font-medium capitalize">{formattedDate}</p>
             </div>
           </div>
           
           <Separator />
           
-          {/* Horário */}
           <div className="flex items-center gap-3 py-2">
             <Clock className="w-5 h-5 text-primary" />
             <div>
-              <p className="font-medium">{bookingData.time || 'N/A'}</p>
               <p className="text-sm text-primary">Horário</p>
+              <p className="font-medium">{bookingData.time || 'N/A'}</p>
             </div>
           </div>
         </div>
 
-        {/* Informações Adicionais */}
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <MapPin className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div className="space-y-1">
-              <p className="font-medium text-blue-900">Barbearia EstiloMestre</p>
+              <p className="font-medium text-blue-900">{selectedBarbershopName || 'N/A'}</p>
               <p className="text-sm text-blue-700">
-                Rua das Flores, 123 - Centro<br />
-                São Paulo, SP - CEP: 01234-567
+                {selectedBarbershopAddress || 'N/A'}
               </p>
             </div>
           </div>
