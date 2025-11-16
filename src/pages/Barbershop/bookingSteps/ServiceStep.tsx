@@ -46,7 +46,6 @@ export default function ServiceStep() {
 
     const handleSelectService = (serviceId: string) => {
         updateBookingData({ barbershopServiceId: serviceId });
-        console.log('Serviço selecionado:', serviceId);
         nextStep();
     };
 

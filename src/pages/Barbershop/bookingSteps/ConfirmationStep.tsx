@@ -16,26 +16,11 @@ import {
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
-// Dados mockados para exibir nomes em vez de IDs
-const SERVICES = [
-  { id: "service1", name: "Corte de Cabelo", price: "R$ 50,00" },
-  { id: "service2", name: "Barba", price: "R$ 30,00" },
-  { id: "service3", name: "Corte e Barba", price: "R$ 75,00" }
-];
-
-const PROFESSIONALS = [
-  { id: "emp1", name: "João Silva" },
-  { id: "emp2", name: "Carlos Santos" },
-  { id: "emp3", name: "Pedro Oliveira" }
-];
-
 export default function ConfirmationStep() {
   const { bookingData, reset, prevStep } = useBookingStore();
   const navigate = useNavigate();
 
   const handleConfirm = () => {
-    console.log("Agendamento confirmado:", bookingData);
-    
     // Simular sucesso no agendamento
     alert("🎉 Agendamento realizado com sucesso!\n\nVocê receberá uma confirmação por WhatsApp.");
     
@@ -48,11 +33,11 @@ export default function ConfirmationStep() {
   };
 
   // Buscar dados para exibição
-  const selectedService = SERVICES.find(s => s.id === bookingData.barbershopServiceId);
-  const selectedProfessional = PROFESSIONALS.find(e => e.id === bookingData.employeeId);
-  
+  const selectedService = bookingData.barbershopServiceId
+  const selectedProfessional = bookingData.employeeId
+
   const formattedDate = bookingData.date
-    ? format(new Date(bookingData.date), "EEEE, dd 'de' MMMM 'de' yyyy", { 
+    ? format(new Date(`${bookingData.date}T00:00:00`), "EEEE, dd 'de' MMMM 'de' yyyy", { 
         locale: ptBR 
       })
     : 'N/A';
@@ -77,13 +62,13 @@ export default function ConfirmationStep() {
             <div className="flex items-center gap-3">
               <Scissors className="w-5 h-5 text-primary" />
               <div>
-                <p className="font-medium">{selectedService?.name || 'N/A'}</p>
+                <p className="font-medium">{selectedService|| 'N/A'}</p>
                 <p className="text-sm text-primary">Serviço</p>
               </div>
             </div>
             <div className="flex items-center gap-1 font-semibold text-primary">
               <DollarSign className="w-4 h-4" />
-              {selectedService?.price || 'N/A'}
+              {selectedService || 'N/A'}
             </div>
           </div>
           
@@ -93,7 +78,7 @@ export default function ConfirmationStep() {
           <div className="flex items-center gap-3 py-2">
             <User className="w-5 h-5 text-primary" />
             <div>
-              <p className="font-medium">{selectedProfessional?.name || 'N/A'}</p>
+              <p className="font-medium">{selectedProfessional || 'N/A'}</p>
               <p className="text-sm text-primary">Profissional</p>
             </div>
           </div>
