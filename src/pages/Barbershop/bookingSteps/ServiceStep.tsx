@@ -44,8 +44,11 @@ export default function ServiceStep() {
         enabled: !!barbershopId,
     });
 
-    const handleSelectService = (serviceId: string) => {
-        updateBookingData({ barbershopServiceId: serviceId });
+    const handleSelectService = (serviceId: string, serviceDescription: string) => {
+        updateBookingData({ 
+            barbershopServiceId: serviceId, 
+            barbershopServiceDescription: serviceDescription // Adicionando a descrição do serviço ao estado
+        });
         nextStep();
     };
 
@@ -71,7 +74,10 @@ export default function ServiceStep() {
                     error={error}
                     services={services}
                     selectedServiceId={bookingData.barbershopServiceId || undefined}
-                    onSelectService={handleSelectService}
+                    onSelectService={(serviceId) => {
+                        const selectedService = services?.find(service => service.id === serviceId);
+                        handleSelectService(serviceId, selectedService?.description || '');
+                    }}
                 />
                 <Button onClick={handleCancel} className="w-full mt-6">
                     <ArrowLeft className="w-4 h-4 mr-2" />

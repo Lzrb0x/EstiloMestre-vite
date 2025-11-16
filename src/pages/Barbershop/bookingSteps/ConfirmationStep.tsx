@@ -33,8 +33,8 @@ export default function ConfirmationStep() {
   };
 
   // Buscar dados para exibição
-  const selectedService = bookingData.barbershopServiceId
-  const selectedProfessional = bookingData.employeeId
+  const selectedServiceDescription = bookingData.barbershopServiceDescription;
+  const selectedProfessionalName = bookingData.employeeName;
 
   const formattedDate = bookingData.date
     ? format(new Date(`${bookingData.date}T00:00:00`), "EEEE, dd 'de' MMMM 'de' yyyy", { 
@@ -62,13 +62,13 @@ export default function ConfirmationStep() {
             <div className="flex items-center gap-3">
               <Scissors className="w-5 h-5 text-primary" />
               <div>
-                <p className="font-medium">{selectedService|| 'N/A'}</p>
+                <p className="font-medium">{selectedServiceDescription || 'N/A'}</p>
                 <p className="text-sm text-primary">Serviço</p>
               </div>
             </div>
             <div className="flex items-center gap-1 font-semibold text-primary">
               <DollarSign className="w-4 h-4" />
-              {selectedService || 'N/A'}
+              {selectedServiceDescription || 'N/A'}
             </div>
           </div>
           
@@ -78,7 +78,7 @@ export default function ConfirmationStep() {
           <div className="flex items-center gap-3 py-2">
             <User className="w-5 h-5 text-primary" />
             <div>
-              <p className="font-medium">{selectedProfessional || 'N/A'}</p>
+              <p className="font-medium">{selectedProfessionalName || 'N/A'}</p>
               <p className="text-sm text-primary">Profissional</p>
             </div>
           </div>

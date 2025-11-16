@@ -3,6 +3,8 @@ import { create } from "zustand";
 interface BookingData {
   barbershopId: string | null;
   barbershopServiceId: string | null;
+  barbershopServiceDescription: string | null; 
+  employeeName: string | null; 
   employeeId: string | null;
   date: string | null;
   time: string | null;
@@ -22,12 +24,13 @@ const initialState = {
   bookingData: {
     barbershopId: null,
     barbershopServiceId: null,
+    barbershopServiceDescription: null,
     employeeId: null,
+    employeeName: null,
     date: null,
     time: null,
   },
 };
-
 
 export const useBookingStore = create<BookingState>((set) => ({
   ...initialState,

@@ -48,8 +48,11 @@ export default function ProfessionalStep() {
     enabled: !!barbershopId && !!bookingData.barbershopServiceId,
   });
 
-  const handleSelectProfessional = (employeeId: string) => {
-    updateBookingData({ employeeId });
+  const handleSelectProfessional = (employeeId: string, employeeName: string) => {
+    updateBookingData({ 
+        employeeId, 
+        employeeName // Adicionando o nome do profissional ao estado
+    });
     nextStep();
   };
 
@@ -72,7 +75,10 @@ export default function ProfessionalStep() {
           isError={isError}
           error={error}
           selectedEmployeeId={bookingData.employeeId || undefined}
-          onSelectEmployee={handleSelectProfessional}
+          onSelectEmployee={(employeeId) => {
+            const selectedEmployee = employees?.find(employee => employee.id === employeeId);
+            handleSelectProfessional(employeeId, selectedEmployee?.name || '');
+          }}
         />
         <Button onClick={handleCancel} className="w-full mt-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
