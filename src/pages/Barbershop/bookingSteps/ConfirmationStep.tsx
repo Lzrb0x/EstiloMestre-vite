@@ -15,20 +15,159 @@ import {
 } from "lucide-react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { PartialLoginDialog } from "@/components/auth/PartialLoginDialog";
 
 export default function ConfirmationStep() {
   const { bookingData, reset, prevStep } = useBookingStore();
   const navigate = useNavigate();
+  const { isAuthenticated, getAccessToken } = useAuth();
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
 
-  const handleConfirm = () => {
-    // Simular sucesso no agendamento
-    alert("🎉 Agendamento realizado com sucesso!\n\nVocê receberá uma confirmação por WhatsApp.");
-    
-    const barbershopId = bookingData.barbershopId;
-    reset();
-    
-    if (barbershopId) {
-      navigate(`/barbershop/${barbershopId}/barbershopDetails`);
+  const handleConfirm = async () => {
+    // Verificar se o usuário está autenticado
+    if (!isAuthenticated) {
+      setShowLoginDialog(true);
+      return;
+    }
+
+    // Processar o agendamento com o token
+    await processBooking();
+  };
+
+  const processBooking = async () => {
+    try {
+      const token = getAccessToken();
+      
+      
+      if (!token) {
+        throw new Error('Token de autenticação não encontrado');
+      }
+
+      // Validar dados obrigatórios
+      if (!bookingData.barbershopId || !bookingData.barbershopServiceId || 
+          !bookingData.employeeId || !bookingData.date || !bookingData.time) {
+        throw new Error('Dados incompletos para realizar o agendamento');
+      }
+
+      // Preparar dados para envio
+      const bookingPayload = {
+        barbershopId: parseInt(bookingData.barbershopId),
+        barbershopServiceId: parseInt(bookingData.barbershopServiceId),
+        employeeId: parseInt(bookingData.employeeId),
+        date: bookingData.date,
+        startTime: bookingData.time
+      };
+
+
+      // Fazer requisição para criar agendamento
+      const response = await fetch('http://localhost:5008/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(bookingPayload)
+      });
+
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Erro do servidor:', errorText);
+        
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          errorData = { message: errorText };
+        }
+        
+        throw new Error(errorData?.message || `Falha ao criar agendamento (Status: ${response.status})`);
+      }
+
+      const result = await response.json();
+      console.log('Agendamento criado:', result);
+      
+      alert("🎉 Agendamento realizado com sucesso!\n\nVocê receberá uma confirmação por WhatsApp.");
+      
+      const barbershopId = bookingData.barbershopId;
+      reset();
+      
+      if (barbershopId) {
+        navigate(`/barbershop/${barbershopId}/barbershopDetails`);
+      }
+    } catch (error) {
+      console.error('Erro ao processar agendamento:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+      alert(`Erro ao processar agendamento: ${errorMessage}\n\nPor favor, tente novamente.`);
+    }
+  };
+
+  const handleLoginSuccess = (token: string) => {
+    // Após login bem-sucedido, processar o agendamento com o token recebido
+    processBookingWithToken(token);
+  };
+
+  const processBookingWithToken = async (token: string) => {
+    try {
+      
+      // Validar dados obrigatórios
+      if (!bookingData.barbershopId || !bookingData.barbershopServiceId || 
+          !bookingData.employeeId || !bookingData.date || !bookingData.time) {
+        throw new Error('Dados incompletos para realizar o agendamento');
+      }
+
+      // Preparar dados para envio
+      const bookingPayload = {
+        barbershopId: parseInt(bookingData.barbershopId),
+        barbershopServiceId: parseInt(bookingData.barbershopServiceId),
+        employeeId: parseInt(bookingData.employeeId),
+        date: bookingData.date,
+        startTime: bookingData.time
+      };
+
+
+      // Fazer requisição para criar agendamento
+      const response = await fetch('http://localhost:5008/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(bookingPayload)
+      });
+
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Erro do servidor:', errorText);
+        
+        let errorData;
+        try {
+          errorData = JSON.parse(errorText);
+        } catch {
+          errorData = { message: errorText };
+        }
+        
+        throw new Error(errorData?.message || `Falha ao criar agendamento (Status: ${response.status})`);
+      }
+
+      const result = await response.json();
+      console.log('Agendamento criado:', result);
+      
+      alert("🎉 Agendamento realizado com sucesso!\n\nVocê receberá uma confirmação por WhatsApp.");
+      
+      const barbershopId = bookingData.barbershopId;
+      reset();
+      
+      if (barbershopId) {
+        navigate(`/barbershop/${barbershopId}/barbershopDetails`);
+      }
+    } catch (error) {
+      console.error('Erro ao processar agendamento:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+      alert(`Erro ao processar agendamento: ${errorMessage}\n\nPor favor, tente novamente.`);
     }
   };
 
@@ -47,7 +186,13 @@ export default function ConfirmationStep() {
     : 'N/A';
 
   return (
-    <Card className="border-0 shadow-lg">
+    <>
+      <PartialLoginDialog 
+        open={showLoginDialog} 
+        onOpenChange={setShowLoginDialog}
+        onSuccess={handleLoginSuccess}
+      />
+      <Card className="border-0 shadow-lg">
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2 text-xl">
           <Check className="h-5 w-5 text-primary" />
@@ -145,5 +290,6 @@ export default function ConfirmationStep() {
         </p>
       </CardContent>
     </Card>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { SheetComponent } from "@/components/SheetComponent";
+// import { SheetComponent } from "@/components/SheetComponent";
 import { Link } from "react-router-dom";
 
 export const Header = () => {
@@ -7,10 +7,10 @@ export const Header = () => {
     { label: "Sobre", href: "#about" },
   ];
 
-  const ctaItem = [
-    { label: "Cadastrar", href: "/register" },
-    { label: "Entrar", href: "/login" },
-  ];
+  // const ctaItem = [
+  //   { label: "Cadastrar", href: "/register" },
+  //   { label: "Entrar", href: "/login" },
+  // ];
 
   return (
     <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
@@ -31,7 +31,7 @@ export const Header = () => {
                 {item.label}
               </a>
             ))}
-            {ctaItem.map((item, index) => (
+            {/* {ctaItem.map((item, index) => (
               <Link
                 key={item.label}
                 to={item.href}
@@ -43,12 +43,12 @@ export const Header = () => {
               >
                 {item.label}
               </Link>
-            ))}
+            ))} */}
           </nav>
 
-          <div className="md:hidden">
+          {/* <div className="md:hidden">
             <SheetComponent navItems={navItems} ctaItem={ctaItem} />
-          </div>
+          </div> */}
         </div>
       </div>
     </header>
