@@ -64,7 +64,7 @@ export function PartialLoginDialog({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Faça login para continuar</DialogTitle>
-          <DialogDescription>
+          <DialogDescription className='text-blue-600'>
             Precisamos de algumas informações para confirmar seu agendamento.
           </DialogDescription>
         </DialogHeader>
@@ -72,7 +72,7 @@ export function PartialLoginDialog({
           <div className="space-y-2">
             <Label htmlFor="name">Nome completo</Label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-600 h-4 w-4" />
               <Input
                 id="name"
                 type="text"
@@ -80,7 +80,7 @@ export function PartialLoginDialog({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="pl-10"
+                className="pl-10 placeholder:text-slate-600"
                 disabled={isLoading}
               />
             </div>
@@ -88,7 +88,7 @@ export function PartialLoginDialog({
           <div className="space-y-2">
             <Label htmlFor="phone">Número de telefone</Label>
             <div className="relative">
-              <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-600 h-4 w-4" />
               <Input
                 id="phone"
                 type="tel"
@@ -96,7 +96,7 @@ export function PartialLoginDialog({
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
-                className="pl-10"
+                className="pl-10 placeholder:text-slate-600"
                 disabled={isLoading}
               />
             </div>

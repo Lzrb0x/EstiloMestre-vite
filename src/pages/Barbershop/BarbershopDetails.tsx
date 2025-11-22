@@ -12,7 +12,11 @@ export default function BarbershopDetails() {
   useEffect(() => {
     const fetchBarbershopDetails = async (id: string) => {
       try {
-        const response = await fetch(`http://localhost:5008/barbershop/${id}/details`);
+        const response = await fetch(`https://kena-ungrovelling-amphiboly.ngrok-free.dev/barbershop/${id}/details`, {
+          headers: {
+            'ngrok-skip-browser-warning': 'true'
+          }
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch barbershop details");
         }

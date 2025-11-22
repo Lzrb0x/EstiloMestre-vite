@@ -26,13 +26,20 @@ const ShortBarbershopCardList = () => {
   const { data, error, isLoading } = useQuery<FetchBarbershopsResponse, Error>({
     queryKey: ["barbershops"],
     queryFn: async ({ signal }) => {
-      const response = await fetch("http://localhost:5008/clientdashboard", { signal });
+      const response = await fetch("https://kena-ungrovelling-amphiboly.ngrok-free.dev/clientdashboard", { 
+        signal,
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      });
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
     },
   });
+
+  console.log("Fetched barbershops data:", data);
 
   if (isLoading) {
     return (

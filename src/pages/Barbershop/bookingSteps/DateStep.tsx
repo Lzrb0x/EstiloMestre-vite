@@ -39,8 +39,13 @@ export default function DateStep() {
 
         const formattedDate = format(selectedDate, "yyyy/MM/dd");
         const response = await fetch(
-          `http://localhost:5008/barbershop/1/employees/1/available-slots?date=${formattedDate}&barbershopServiceId=${bookingData.barbershopServiceId}`,
-          { signal }
+          `https://kena-ungrovelling-amphiboly.ngrok-free.dev/barbershop/1/employees/1/available-slots?date=${formattedDate}&barbershopServiceId=${bookingData.barbershopServiceId}`,
+          { 
+            signal,
+            headers: {
+              'ngrok-skip-browser-warning': 'true'
+            }
+          }
         );
 
         if (!response.ok) {

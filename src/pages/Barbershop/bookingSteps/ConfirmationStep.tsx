@@ -62,11 +62,12 @@ export default function ConfirmationStep() {
 
 
       // Fazer requisição para criar agendamento
-      const response = await fetch('http://localhost:5008/booking', {
+      const response = await fetch('https://kena-ungrovelling-amphiboly.ngrok-free.dev/booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify(bookingPayload)
       });
@@ -129,11 +130,12 @@ export default function ConfirmationStep() {
 
 
       // Fazer requisição para criar agendamento
-      const response = await fetch('http://localhost:5008/booking', {
+      const response = await fetch('https://kena-ungrovelling-amphiboly.ngrok-free.dev/booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
+          'ngrok-skip-browser-warning': 'true'
         },
         body: JSON.stringify(bookingPayload)
       });
