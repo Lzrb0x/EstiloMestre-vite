@@ -62,7 +62,7 @@ export default function ConfirmationStep() {
 
 
       // Fazer requisição para criar agendamento
-      const response = await fetch('https://kena-ungrovelling-amphiboly.ngrok-free.dev/booking', {
+      const response = await fetch('http://localhost:5008/booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export default function ConfirmationStep() {
 
 
       // Fazer requisição para criar agendamento
-      const response = await fetch('https://kena-ungrovelling-amphiboly.ngrok-free.dev/booking', {
+      const response = await fetch('http://localhost:5008/booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

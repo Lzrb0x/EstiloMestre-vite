@@ -35,7 +35,7 @@ export const Header = () => {
               <Link
                 key={item.label}
                 to={item.href}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-4 py-2 rounded-lg font-medium transition-colors opacity-0 ${
                   index === 0
                     ? "bg-muted-foreground text-secondary hover:bg-primary hover:text-white"
                     : "bg-primary text-white hover:bg-primary/90"

@@ -32,7 +32,7 @@ export default function ProfessionalStep() {
       }
 
       const response = await fetch(
-        `https://kena-ungrovelling-amphiboly.ngrok-free.dev/barbershop/${barbershopId}/employee-by-service?barbershopServiceId=${serviceId}`,
+        `http://localhost:5008/barbershop/${barbershopId}/employee-by-service?barbershopServiceId=${serviceId}`,
         { 
           signal,
           headers: {

@@ -29,7 +29,7 @@ export default function ServiceStep() {
     } = useQuery<BarbershopService[], Error>({
         queryKey: ['barbershopServices', barbershopId],
         queryFn: async ({ signal }) => {
-            const response = await fetch(`https://kena-ungrovelling-amphiboly.ngrok-free.dev/barbershop/${barbershopId}/barbershop-services`, { 
+            const response = await fetch(`http://localhost:5008/barbershop/${barbershopId}/barbershop-services`, { 
               signal,
               headers: {
                 'ngrok-skip-browser-warning': 'true'

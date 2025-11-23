@@ -10,7 +10,7 @@ interface User {
   tokens: AuthTokens;
 }
 
-const API_BASE_URL = 'https://kena-ungrovelling-amphiboly.ngrok-free.dev';
+const API_BASE_URL = 'http://localhost:5008';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);

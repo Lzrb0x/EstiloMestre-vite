@@ -18,15 +18,13 @@ type FetchBarbershopsResponse = {
 };
 
 
-//the api must receive an optional params to limit the amount of returned barbershops
-// Max will be 6
-// Example: http://localhost:5008/clientdashboard?limit=6
+
 const ShortBarbershopCardList = () => {
 
   const { data, error, isLoading } = useQuery<FetchBarbershopsResponse, Error>({
     queryKey: ["barbershops"],
     queryFn: async ({ signal }) => {
-      const response = await fetch("https://kena-ungrovelling-amphiboly.ngrok-free.dev/clientdashboard", { 
+      const response = await fetch("http://localhost:5008/clientdashboard", { 
         signal,
         headers: {
           'ngrok-skip-browser-warning': 'true'
