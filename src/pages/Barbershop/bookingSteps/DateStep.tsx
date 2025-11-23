@@ -39,8 +39,8 @@ export default function DateStep() {
 
         const formattedDate = format(selectedDate, "yyyy/MM/dd");
         const response = await fetch(
-          `https://kena-ungrovelling-amphiboly.ngrok-free.dev/barbershop/1/employees/1/available-slots?date=${formattedDate}&barbershopServiceId=${bookingData.barbershopServiceId}`,
-          { 
+          `https://kena-ungrovelling-amphiboly.ngrok-free.dev/barbershop/${bookingData.barbershopId}/employees/${bookingData.employeeId}/available-slots?date=${formattedDate}&barbershopServiceId=${bookingData.barbershopServiceId}`,
+          {
             signal,
             headers: {
               'ngrok-skip-browser-warning': 'true'
@@ -58,7 +58,7 @@ export default function DateStep() {
           return []; // Retorna vazio se for um dia de folga
         }
 
-        return data.slots.map((slot) => slot.time.slice(0, 5)); 
+        return data.slots.map((slot) => slot.time.slice(0, 5));
       },
       enabled: !!selectedDate && !!bookingData.barbershopServiceId,
     }
