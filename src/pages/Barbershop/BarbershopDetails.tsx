@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useParams } from "react-router-dom";
 import { useBookingStore } from "./store/bookingStore";
 import { useEffect, useState } from "react";
+import { BarberIcon } from "@/components/BarberIcon";
 
 export default function BarbershopDetails() {
   const { barbershopId } = useParams<{ barbershopId: string }>();
@@ -43,7 +44,7 @@ export default function BarbershopDetails() {
         fetchBarbershopDetails(barbershopId);
       }
     } else {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   }, [barbershopId, bookingData.barbershopId, reset, updateBookingData]);
 
@@ -52,93 +53,110 @@ export default function BarbershopDetails() {
   }
 
   return (
-    <div className="min-h-screen cta-section">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       <Header />
 
-      {/* banner */}
-      <div className="hero-bg relative h-[50vh] flex items-center justify-center overflow-hidden animate-[fadeInUp_1s_ease-out_forwards] opacity-0">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-16 h-16 bg-white/10 rounded-full animate-float"></div>
-          <div className="absolute top-3/4 right-1/4 w-20 h-20 bg-white/10 rounded-full animate-float"></div>
-          <div className="absolute bottom-1/4 left-1/3 w-12 h-12 bg-white/10 rounded-full animate-float"></div>
-        </div>
-        <div className="relative z-10 text-center px-4">
-          <h1 className="text-4xl md:text-6xl font-black text-white mb-4 animate-pulse-slow">
-            Foto Barbearia
-          </h1>
-          <p className="text-xl md:text-2xl text-white/90 font-light tracking-wider">
+      {/* Cabeçalho da Barbearia */}
+      <div className="container mx-auto px-4 pt-8 pb-12">
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center justify-center w-42 h-42 bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 rounded-full mb-4 shadow-2xl relative overflow-hidden">
+            <BarberIcon />
+          </div>
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 mb-2">
             {bookingData.barbershopName}
-          </p>
-        </div>
-      </div>
-
-      <div className="text-center mt-10">
-        <Link to={`/barbershop/${barbershopId}/booking`}>
-          <Button className="font-bold w-1/2 py-10 xs:text-xs md:text-md xl:text-xl">
-            QUERO AGENDAR AGORA!
-          </Button>
-        </Link>
-      </div>
-
-      {/* detalhes da barbearia */}
-      <section className="container mx-auto px-4 py-16 animate-[slideUp_0.8s_ease-out_0.6s_forwards] opacity-0">
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <div className="glass-effect rounded-2xl p-8 card-hover border bg-white border-gray-200">
-            <div className="flex items-center mb-6">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-2xl mr-4">
-                📍
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900">Endereço e Contato</h3>
-            </div>
-            <div className="space-y-3 text-gray-700">
-              <p className="text-lg">{bookingData.barbershopAddress}</p>
-              {/* <p className="text-lg font-semibold text-primary">{bookingData.phone}</p> */}
-              <div className="flex items-center">
-                <span className="text-yellow-500 text-xl mr-2">★</span>
-                <span className="text-lg font-semibold">4.8 (Avaliação)</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="glass-effect rounded-2xl p-8 card-hover border bg-white border-gray-200">
-            <div className="flex items-center mb-6">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center text-white text-2xl mr-4">
-                ✨
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900">Especialidades</h3>
-            </div>
-            <div className="space-y-3">
-              {bookingData.barbershopServices ? bookingData.barbershopServices.map((service) => (
-                <div className="flex items-center" key={service.barbershopServiceId}>
-                  <span className="text-primary mr-3">✦</span>
-                  <span className="text-gray-700 text-lg">{service.descriptionOverride}</span>
-                </div>
-              )) : <p>Nenhum serviço encontrado.</p>}
-            </div>
-          </div>
+          </h1>
+          <p className="text-gray-600 text-lg">Estilo e Qualidade em Cada Corte</p>
         </div>
 
-        <div className="mb-16">
-          <h3 className="text-2xl font-semibold text-gray-900 text-center mb-8">Nossos Profissionais</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {bookingData.barbershopEmployees ? bookingData.barbershopEmployees.map((employee) => (
-              <div className="bg-white rounded-xl p-6 text-center" key={employee.userId}>
-                <div className="text-3xl mb-3 border rounded-2xl p-10 py-20">photo</div>
-                <h4 className="font-semibold text-gray-900 mb-1">{employee.name}</h4>
-                <p className="text-gray-600 text-sm">Descrição do profissional</p>
-              </div>
-            )) : <p>Nenhum profissional encontrado.</p>}
-          </div>
-        </div>
-
-        <div className="text-center">
+        <div className="text-center mb-12">
           <Link to={`/barbershop/${barbershopId}/booking`}>
-            <Button className="font-bold w-1/2 py-10 xs:text-xs md:text-md xl:text-xl">
-              QUERO AGENDAR AGORA!
+            <Button className="font-bold px-12 py-6 text-lg shadow-lg hover:shadow-xl transition-all">
+              AGENDAR
             </Button>
           </Link>
         </div>
-      </section>
+
+        {/* Grid de Informações */}
+        <div className="grid md:grid-cols-2 gap-6 mb-12">
+          {/* Endereço e Contato */}
+          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-gray-100">
+            <div className="flex items-center mb-6">
+              {/* <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl mr-4 shadow-md">
+                📍
+              </div> */}
+              <h3 className="text-2xl font-bold text-gray-900">Localização</h3>
+            </div>
+            <div className="text-gray-700 border-t border-b-gray-200 pt-4 space-y-4">
+              <p className="text-lg leading-relaxed font-bold">📍 {bookingData.barbershopAddress}</p>
+              <div className="flex items-center pt-2">
+                <span className="text-yellow-500 text-2xl mr-2">★</span>
+                <span className="text-lg font-semibold">4.8</span>
+                <span className="text-gray-500 ml-2">(Avaliação dos clientes)</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Serviços */}
+          <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all border border-gray-100">
+            <div className="flex items-center mb-6">
+              {/* <div className="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full flex items-center justify-center text-white text-2xl mr-4 shadow-md">
+                ✨
+              </div> */}
+              <h3 className="text-2xl font-bold text-gray-900">Nossos Serviços</h3>
+            </div>
+            <div className="border-t border-b-gray-200 pt-2">
+              {bookingData.barbershopServices ? bookingData.barbershopServices.map((service) => (
+                <div className="flex items-center p-3 rounded-lg hover:bg-slate-50 transition-colors" key={service.barbershopServiceId}>
+                  <span className="text-purple-600 mr-3 text-xl">✦</span>
+                  <span className="text-gray-800 text-lg font-bold">{service.descriptionOverride}</span>
+                </div>
+              )) : <p className="text-gray-500">Nenhum serviço encontrado.</p>}
+            </div>
+          </div>
+        </div>
+
+        {/* Profissionais */}
+        <div className="bg-white rounded-2xl p-8 md:p-12 shadow-lg border border-gray-100">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-bold text-gray-900 mb-2">Nossa Equipe</h3>
+            <p className="text-gray-600">Profissionais experientes e qualificados</p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {bookingData.barbershopEmployees ? bookingData.barbershopEmployees.map((employee, index) => {
+              const gradients = [
+                'from-blue-500 to-purple-600',
+                'from-purple-500 to-pink-600',
+                'from-pink-500 to-red-600',
+                'from-orange-500 to-yellow-600',
+                'from-green-500 to-teal-600',
+                'from-teal-500 to-blue-600'
+              ];
+              const gradient = gradients[index % gradients.length];
+              const initials = employee.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+
+              return (
+                <div className="group" key={employee.userId}>
+                  <div className="bg-slate-50 rounded-xl p-6 text-center hover:bg-white transition-all duration-300 border border-gray-100 hover:shadow-lg">
+                    <div className={`w-28 h-28 mx-auto mb-4 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-white text-3xl font-bold shadow-lg group-hover:scale-110 transition-transform`}>
+                      {initials}
+                    </div>
+                    <h4 className="font-bold text-gray-900 text-lg mb-1">{employee.name}</h4>
+                  </div>
+                </div>
+              );
+            }) : <p className="col-span-full text-center text-gray-500">Nenhum profissional encontrado.</p>}
+          </div>
+        </div>
+
+        {/* CTA Final */}
+        <div className="text-center mt-12">
+          <Link to={`/barbershop/${barbershopId}/booking`}>
+            <Button className="font-bold px-16 py-7 text-xl shadow-xl hover:shadow-2xl transition-all">
+              AGENDAR MEU HORÁRIO
+            </Button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

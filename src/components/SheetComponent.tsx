@@ -34,7 +34,7 @@ export const SheetComponent = ({ navItems, ctaItem }: SheetComponentProps) => {
           <SheetTitle className="text-2xl">Menu</SheetTitle>
         </SheetHeader>
 
-        <nav className="flex flex-col gap-4" onClick={() => setOpen(false)}>
+        <nav className="flex flex-col gap-4 opacity-0" onClick={() => setOpen(false)}>
           {navItems.map((item) => (
             <a
               key={item.label}
